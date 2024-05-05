@@ -18,10 +18,10 @@ int main () {
   int64_t num;
 
   while (insert >> num) {
-    bool regular_status = regular.insert(num);
+    const bool regular_status = regular.insert(num);
   }
   while (query >> num) {
-    RegularNode* regular_status = regular.find(num);
+    const RegularNode* regular_status = regular.find(num);
   }
 
   insert.close();

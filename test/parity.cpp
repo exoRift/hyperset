@@ -2,6 +2,7 @@
 #include "../comparison/regularset.h"
 #include <iostream>
 #include <fstream>
+#include <set>
 
 int main () {
   std::ifstream insert;
@@ -9,6 +10,7 @@ int main () {
   std::ifstream query;
   query.open("query.txt");
 
+  std::set<int64_t> sanity;
   HyperSet hyper;
   RegularSet regular;
 
@@ -20,27 +22,32 @@ int main () {
   int64_t num;
 
   while (insert >> num) {
-    bool hyper_status = hyper.insert(num);
-    bool regular_status = regular.insert(num);
+    size_t original_size = sanity.size();
+    sanity.insert(num);
+    size_t new_size = sanity.size();
+    const bool sanity_status = new_size != original_size;
+    const bool hyper_status = hyper.insert(num);
+    const bool regular_status = regular.insert(num);
 
-    if (hyper_status != regular_status) {
-      std::cerr << "INSERT MISMATCH: " << num << " Hyp: " << hyper_status << " Reg: " << regular_status << std::endl;
+    if (hyper_status != sanity_status || regular_status != sanity_status) {
+      std::cerr << "INSERT MISMATCH: " << num << " Hyp: " << hyper_status << " Reg: " << regular_status << " San: " << sanity_status << std::endl;
 
       return 1;
     }
   }
   while (query >> num) {
-    HyperNode* hyper_status = hyper.find(num);
-    RegularNode* regular_status = regular.find(num);
+    const auto sanity_iterator = sanity.find(num);
+    const HyperNode* hyper_status = hyper.find(num);
+    const RegularNode* regular_status = regular.find(num);
 
-    if (hyper_status == nullptr || regular_status == nullptr) {
+    if (sanity_iterator == sanity.end()) {
       if (hyper_status) {
-        std::cerr << "QUERY MISMATCH: " << num << ", Hyper found, regular not found." << std::endl;
+        std::cerr << "QUERY MISMATCH: " << num << ", Hyper found, sanity not found." << std::endl;
 
         return 1;
       }
       if (regular_status) {
-        std::cerr << "QUERY MISMATCH: " << num << ", Hyper not found, regular found." << std::endl;
+        std::cerr << "QUERY MISMATCH: " << num << ", Regular found, sanity not found." << std::endl;
 
         return 1;
       }

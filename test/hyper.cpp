@@ -18,10 +18,10 @@ int main () {
   int64_t num;
 
   while (insert >> num) {
-    bool hyper_status = hyper.insert(num);
+    const bool hyper_status = hyper.insert(num);
   }
   while (query >> num) {
-    HyperNode* hyper_status = hyper.find(num);
+    const HyperNode* hyper_status = hyper.find(num);
   }
 
   insert.close();

@@ -15,10 +15,10 @@ int main () {
   int64_t num;
 
   for (size_t i = 0; i < insert.size(); ++i) {
-    int64_t num = insert[i];
-    bool desired_status = insert_status[i];
-    bool hyper_status = hyper.insert(num);
-    bool regular_status = regular.insert(num);
+    const int64_t num = insert[i];
+    const bool desired_status = insert_status[i];
+    const bool hyper_status = hyper.insert(num);
+    const bool regular_status = regular.insert(num);
 
     if (hyper_status != desired_status) {
       std::cerr << "INSERT MISMATCH: " << i << " " << num << " Hyp: " << hyper_status << " Des: " << desired_status << std::endl;
@@ -32,10 +32,10 @@ int main () {
     }
   }
   for (size_t i = 0; i < query.size(); ++i) {
-    int64_t num = query[i];
-    bool desired_status = query_status[i];
-    HyperNode* hyper_status = hyper.find(num);
-    RegularNode* regular_status = regular.find(num);
+    const int64_t num = query[i];
+    const bool desired_status = query_status[i];
+    const HyperNode* hyper_status = hyper.find(num);
+    const RegularNode* regular_status = regular.find(num);
 
     if (desired_status) {
       if (hyper_status == nullptr) {
