@@ -35,7 +35,7 @@ bool HyperSet::insert (int64_t val) {
   if (best->value() == val) return false;
 
   HyperNode* node = new HyperNode(val);
-  const int8_t index = best->_compare(val);
+  const uint8_t index = best->_compare(val);
   best->_children[index] = node;
 
   return true;

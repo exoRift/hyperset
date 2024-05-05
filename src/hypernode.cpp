@@ -13,7 +13,7 @@ HyperNode::~HyperNode () {
 uint8_t HyperNode::_compare (int64_t val_b) const {
   uint8_t result = 0;
 
-  // Note: Each line is a power of 255, starting at 255^1, going tp 255^8
+  // Note: Each line is a power of 255, starting at 255^1, going to 255^8
   result |= (val_b & 255U) < (_key & 255U);
   result |= (val_b & 65280U) < (_key & 65280U) << 1;
   result |= (val_b & 16711680U) < (_key & 16711680U) << 2;

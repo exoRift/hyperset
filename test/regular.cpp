@@ -1,7 +1,6 @@
 #include "../comparison/regularset.h"
 #include <iostream>
 #include <fstream>
-#include <cstdlib>
 
 int main () {
   std::ifstream insert;

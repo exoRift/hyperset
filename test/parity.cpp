@@ -2,7 +2,6 @@
 #include "../comparison/regularset.h"
 #include <iostream>
 #include <fstream>
-#include <cstdlib>
 
 int main () {
   std::ifstream insert;
@@ -36,12 +35,12 @@ int main () {
 
     if (hyper_status == nullptr || regular_status == nullptr) {
       if (hyper_status) {
-        std::cerr << "QUERY MISMATCH: " << num << ", Hyper not found, regular found." << std::endl;
+        std::cerr << "QUERY MISMATCH: " << num << ", Hyper found, regular not found." << std::endl;
 
         return 1;
       }
-      if (hyper_status) {
-        std::cerr << "QUERY MISMATCH: " << num << ", Hyper found, regular not found." << std::endl;
+      if (regular_status) {
+        std::cerr << "QUERY MISMATCH: " << num << ", Hyper not found, regular found." << std::endl;
 
         return 1;
       }
