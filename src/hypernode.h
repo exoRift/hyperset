@@ -8,7 +8,7 @@ class HyperNode {
 
   private:
     int64_t _key;
-    HyperNode* _children[256];
+    HyperNode** _children;
 
     uint8_t _compare (int64_t val_b) const;
   public:

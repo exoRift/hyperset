@@ -36,6 +36,7 @@ bool HyperSet::insert (int64_t val) {
 
   HyperNode* node = new HyperNode(val);
   const uint8_t index = best->_compare(val);
+  if (best->_children == nullptr) best->_children = new HyperNode*[256]();
   best->_children[index] = node;
 
   return true;

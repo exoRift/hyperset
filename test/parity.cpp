@@ -53,6 +53,10 @@ int main () {
       }
 
       continue;
+    } else if (!hyper_status || !regular_status) {
+      std::cerr << "QUERY MISMATCH: " << num << "Regular or Hyper not found, sanity found." << std::endl;
+
+      return 1;
     }
 
     if (hyper_status->value() != regular_status->value()) {
