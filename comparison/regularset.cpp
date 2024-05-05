@@ -24,6 +24,12 @@ RegularNode* RegularSet::_find_best (RegularNode* node, int64_t val) const {
 }
 
 bool RegularSet::insert (int64_t val) {
+  if (_root == nullptr) {
+    _root = new RegularNode(val);
+
+    return true;
+  }
+
   RegularNode* best = _find_best(_root, val);
 
   if (best->value() == val) return false;

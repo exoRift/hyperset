@@ -24,6 +24,12 @@ HyperNode* HyperSet::_find_best (HyperNode* node, int64_t val) const {
 }
 
 bool HyperSet::insert (int64_t val) {
+  if (_root == nullptr) {
+    _root = new HyperNode(val);
+
+    return true;
+  }
+
   HyperNode* best = _find_best(_root, val);
 
   if (best->value() == val) return false;

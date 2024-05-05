@@ -8,7 +8,7 @@ int main () {
   query.open("query.txt");
 
   if (insert.bad() || query.bad()) {
-    std::cout << "Failed to open files" << std::endl;
+    std::cerr << "Failed to open files" << std::endl;
     return 1;
   }
 

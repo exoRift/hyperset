@@ -14,36 +14,47 @@ int main () {
   RegularSet regular;
 
   if (insert.bad() || query.bad()) {
-    std::cout << "Failed to open files" << std::endl;
+    std::cerr << "Failed to open files" << std::endl;
     return 1;
   }
 
   int64_t num;
 
   while (insert >> num) {
-    std::cout << num << std::endl;
-
     bool hyper_status = hyper.insert(num);
     bool regular_status = regular.insert(num);
 
     if (hyper_status != regular_status) {
-      std::cerr << "MISMATCH: " << num << " Hyp: " << hyper_status << " Reg: " << regular_status << std::endl;
+      std::cerr << "INSERT MISMATCH: " << num << " Hyp: " << hyper_status << " Reg: " << regular_status << std::endl;
 
       return 1;
     }
   }
-  // while (query >> num) {
-  //   std::cout << num << std::endl;
+  while (query >> num) {
+    HyperNode* hyper_status = hyper.find(num);
+    RegularNode* regular_status = regular.find(num);
 
-  //   bool hyper_status = hyper.insert(num);
-  //   bool regular_status = regular.insert(num);
+    if (hyper_status == nullptr || regular_status == nullptr) {
+      if (hyper_status) {
+        std::cerr << "QUERY MISMATCH: " << num << ", Hyper not found, regular found." << std::endl;
 
-  //   if (hyper_status != regular_status) {
-  //     std::cerr << "MISMATCH: " << num << " Hyp: " << hyper_status << " Reg: " << regular_status << std::endl;
+        return 1;
+      }
+      if (hyper_status) {
+        std::cerr << "QUERY MISMATCH: " << num << ", Hyper found, regular not found." << std::endl;
 
-  //     return 1;
-  //   }
-  // }
+        return 1;
+      }
+
+      continue;
+    }
+
+    if (hyper_status->value() != regular_status->value()) {
+      std::cerr << "QUERY MISMATCH: " << num << " Hyp: " << hyper_status->value() << " Reg: " << regular_status->value() << std::endl;
+
+      return 1;
+    }
+  }
 
   insert.close();
   query.close();
